@@ -17,7 +17,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class App {
+public class Main {
   public static void main(String[] args) throws ExecutionException, InterruptedException {
     long milisStart = System.currentTimeMillis();
     ExecutorService executorService = Executors.newFixedThreadPool(4);
