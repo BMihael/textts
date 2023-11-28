@@ -11,4 +11,9 @@ public class TextMock implements TextProvider {
   public String provideText2() {
     return "Coolest ship ever. Is sun biggest? Elephant is large";
   }
+
+  @Override
+  public String provideText3() {
+    return "Country";
+  }
 }
