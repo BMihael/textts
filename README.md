@@ -17,8 +17,8 @@ qui dolorem eum fugiat quo voluptas nulla pariatur
 
 
 * It is necessary to make transformations and statistics of the original text:
-  * change the arrangement of letters in each word so that the position of the first i is kept
-    of the last letter, and the position of the other letters will be permuted in a random arrangement
+  * change the arrangement of letters in each word so that the position of the first and last is kept the same
+    and the position of the other letters will be permuted in a random arrangement
   * reverse the arrangement of letters in each word while keeping a capital letter at the beginning of the sentence
   * reverse the order of words in the sentence while retaining the capital letter at the beginning of the sentence
   * reverse order of sentences in the text
