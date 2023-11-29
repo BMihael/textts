@@ -24,7 +24,6 @@ import java.util.logging.Logger;
  */
 public abstract class SentenceManager<T> extends BaseActionManager<T> {
 
-  public static final String COMMA = ",";
   private static final Logger logger = Logger.getLogger(SentenceReverser.class.getName());
 
   public abstract T performAction(SentenceHolder sentence);
@@ -65,10 +64,6 @@ public abstract class SentenceManager<T> extends BaseActionManager<T> {
       e.printStackTrace();
     }
     return resultString;
-  }
-
-  protected String capitaliseFirstWord(String word) {
-    return Character.toUpperCase(word.charAt(0)) + word.substring(1);
   }
 
   public void logAction(String action) {

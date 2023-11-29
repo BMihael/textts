@@ -11,6 +11,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  * An abstract class designed for managing and processing words of sentence. It provides a framework
@@ -61,10 +62,7 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
     String resultString = null;
     try {
       list = future.get();
-      resultString =
-          list.stream()
-              .reduce((a, b) -> SentenceUtil.isSeparator(b) ? a + b : a + DEFAULT_DELIMITER + b)
-              .orElse("");
+      resultString = combineSeparatedSentences(separateSentences(list));
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
@@ -72,8 +70,39 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
     return resultString;
   }
 
+  private static String combineSeparatedSentences(List<List<String>> list1) {
+    return list1.stream().flatMap(List::stream).collect(Collectors.joining(" "));
+  }
+
+  private List<List<String>> separateSentences(List<String> list) {
+    List<List<String>> result = new ArrayList<>();
+    List<String> inner = new ArrayList<>();
+
+    boolean wordShouldBeCapitalised = true;
+
+    for (int i = 0; i < list.size(); i++) {
+      String word = list.get(i);
+      if (wordShouldBeCapitalised) {
+        inner.add(capitaliseFirstWord(word));
+        wordShouldBeCapitalised = false;
+        continue;
+      }
+      if (SentenceUtil.isSeparator(word)) {
+        wordShouldBeCapitalised = true;
+        String wordBeforeSeparator = list.get(i - 1);
+        inner.set(inner.size() - 1, wordBeforeSeparator + word);
+        result.add(inner);
+        inner = new ArrayList<>();
+        continue;
+      }
+      inner.add(list.get(i));
+    }
+
+    return result;
+  }
+
   public static boolean containsComma(String word) {
-    return word.contains(",");
+    return word.contains(COMMA);
   }
 
   public void logAction(String action) {
