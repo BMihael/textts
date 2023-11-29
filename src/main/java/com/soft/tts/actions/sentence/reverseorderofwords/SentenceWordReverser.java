@@ -21,7 +21,7 @@ public class SentenceWordReverser extends SentenceManager<String> implements Sup
 
   @Override
   public String get() {
-    return extractResult(submitTasks(tokens, tokens.size(), load));
+    return extractResultNonReversed(submitTasks(tokens, tokens.size(), load));
   }
 
   @Override

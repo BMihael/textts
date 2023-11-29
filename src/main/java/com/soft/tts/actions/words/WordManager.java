@@ -63,7 +63,7 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
       list = future.get();
       resultString =
           list.stream()
-              .reduce((a, b) -> SentenceUtil.isSeparator(b) ? a + b : a + " " + b)
+              .reduce((a, b) -> SentenceUtil.isSeparator(b) ? a + b : a + DEFAULT_DELIMITER + b)
               .orElse("");
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
