@@ -23,7 +23,7 @@ public class SentenceWordsLetterReverser extends SentenceManager<String>
 
   @Override
   public String get() {
-    return extractResult(submitTasks(tokens, tokens.size(), load));
+    return extractResultNonReversed(submitTasks(tokens, tokens.size(), load));
   }
 
   @Override
@@ -52,7 +52,7 @@ public class SentenceWordsLetterReverser extends SentenceManager<String>
     if (WordManager.containsComma(word)) {
       return new StringBuilder(word.substring(0, word.length() - 1))
           .reverse()
-          .append(",")
+          .append(COMMA)
           .toString();
     }
     return new StringBuilder(word).reverse().toString();

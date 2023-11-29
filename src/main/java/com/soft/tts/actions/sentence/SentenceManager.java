@@ -3,12 +3,16 @@ package com.soft.tts.actions.sentence;
 import com.soft.tts.actions.BaseActionManager;
 import com.soft.tts.actions.sentence.reverse.SentenceReverser;
 import com.soft.tts.model.SentenceHolder;
+import com.soft.tts.util.combiner.sentence.NonReversalSentenceCombiner;
+import com.soft.tts.util.combiner.sentence.ReverseSentenceCombiner;
+import com.soft.tts.util.combiner.sentence.SentenceCombiner;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.function.BinaryOperator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +26,7 @@ import java.util.logging.Logger;
  */
 public abstract class SentenceManager<T> extends BaseActionManager<T> {
 
-  protected static final String DEFAULT_DELIMITER = " ";
+  public static final String COMMA = ",";
   private static final Logger logger = Logger.getLogger(SentenceReverser.class.getName());
 
   public abstract T performAction(SentenceHolder sentence);
@@ -49,30 +53,25 @@ public abstract class SentenceManager<T> extends BaseActionManager<T> {
   }
 
   protected String extractResultReversed(CompletableFuture<List<String>> future) {
-    List<String> list;
-    String resultString = null;
-    try {
-      list = future.get();
-      resultString =
-          list.stream().reduce((partial, next) -> next + DEFAULT_DELIMITER + partial).orElse("");
-    } catch (InterruptedException | ExecutionException e) {
-      e.printStackTrace();
-    }
-
-    return resultString;
+    SentenceCombiner combiner = new ReverseSentenceCombiner();
+    return extractResult(future, combiner);
   }
 
-  protected String extractResult(CompletableFuture<List<String>> future) {
+  protected String extractResultNonReversed(CompletableFuture<List<String>> future) {
+    SentenceCombiner combiner = new NonReversalSentenceCombiner();
+    return extractResult(future, combiner);
+  }
+
+  protected String extractResult(
+      CompletableFuture<List<String>> future, BinaryOperator<String> combiner) {
     List<String> list;
     String resultString = null;
     try {
       list = future.get();
-      resultString = // prebaciti ovo u binary operator
-          list.stream().reduce((partial, next) -> partial + DEFAULT_DELIMITER + next).orElse("");
+      resultString = list.stream().reduce(combiner).orElse("");
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
-
     return resultString;
   }
 

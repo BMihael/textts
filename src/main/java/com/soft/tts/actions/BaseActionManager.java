@@ -30,10 +30,13 @@ import java.util.stream.Collectors;
  */
 public abstract class BaseActionManager<T> {
 
+  public static final String DEFAULT_DELIMITER = " ";
+
   protected abstract List<CompletableFuture<T>> applyAction(
       List<SentenceHolder> tokens, ExecutorService service, Integer load);
 
-  public CompletableFuture<List<T>> submitTasks(List<SentenceHolder> tokens, int numOfThreads, Integer load) {
+  public CompletableFuture<List<T>> submitTasks(
+      List<SentenceHolder> tokens, int numOfThreads, Integer load) {
     ExecutorService service = Executors.newFixedThreadPool(numOfThreads);
 
     CompletableFuture<List<T>> result;
