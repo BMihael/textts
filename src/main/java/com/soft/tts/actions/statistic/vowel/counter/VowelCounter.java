@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -27,20 +25,7 @@ public class VowelCounter extends SentenceManager<VowelOccurrence>
 
   @Override
   public List<VowelOccurrence> get() {
-    ExecutorService service = Executors.newFixedThreadPool(1);
-
-    CompletableFuture<List<VowelOccurrence>> result;
-    try {
-      List<CompletableFuture<VowelOccurrence>> listSentenceFutures =
-          applyAction(tokens, service, 0);
-      result = allOfFutures(listSentenceFutures);
-    } catch (Exception e) {
-      logException(e.getMessage());
-      throw new RuntimeException(e);
-    } finally {
-      service.shutdown();
-    }
-
+    CompletableFuture<List<VowelOccurrence>> result = submitTasks(tokens, 1);
     return extractResultOfVowelOccurrence(result);
   }
 
