@@ -23,7 +23,7 @@ public class SentenceWordsLetterReverser extends SentenceManager<String>
 
   @Override
   public String get() {
-    return extractResultNonReversed(submitTasks(tokens, tokens.size(), load));
+    return extractResult(submitTasks(tokens, tokens.size(), load));
   }
 
   @Override

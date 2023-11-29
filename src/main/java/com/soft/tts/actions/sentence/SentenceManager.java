@@ -4,8 +4,6 @@ import com.soft.tts.actions.BaseActionManager;
 import com.soft.tts.actions.sentence.reverse.SentenceReverser;
 import com.soft.tts.model.SentenceHolder;
 import com.soft.tts.util.combiner.sentence.NonReversalSentenceCombiner;
-import com.soft.tts.util.combiner.sentence.ReverseSentenceCombiner;
-import com.soft.tts.util.combiner.sentence.SentenceCombiner;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,14 +50,8 @@ public abstract class SentenceManager<T> extends BaseActionManager<T> {
     return list;
   }
 
-  protected String extractResultReversed(CompletableFuture<List<String>> future) {
-    SentenceCombiner combiner = new ReverseSentenceCombiner();
-    return extractResult(future, combiner);
-  }
-
-  protected String extractResultNonReversed(CompletableFuture<List<String>> future) {
-    SentenceCombiner combiner = new NonReversalSentenceCombiner();
-    return extractResult(future, combiner);
+  protected String extractResult(CompletableFuture<List<String>> future) {
+    return extractResult(future, new NonReversalSentenceCombiner());
   }
 
   protected String extractResult(
