@@ -30,3 +30,20 @@ For implementation, use classes from the Java 8 SE framework (or later).
 
 
 
+
+
+Run options:
+
+Run application with 5 threads for 5 task and 0ms of delay between tasks
+```
+docker run <image_name>
+```
+Run application with specified number of threads for 5 task and 0 miliseconds of delay between tasks action
+```
+docker run <image_name> <num_of_threads>
+```
+
+Run application with specified number of threads for 5 task and spedcified delay in miliseconds of delay between tasks action
+```
+docker run <image_name> <num_of_threads> <task_delay_1> ... <task_delay_5>
+```
