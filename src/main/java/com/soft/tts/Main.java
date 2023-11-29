@@ -90,7 +90,7 @@ public class Main {
     return args.length == 0 ? 5 : Integer.parseInt(args[0]);
   }
 
-  private static List<Integer> gerSimulatedLoadInMilisecond(String args[]) {
+  private static List<Integer> gerSimulatedLoadInMilisecond(String[] args) {
     List<Integer> result = new ArrayList<>(5);
 
     for (int i = 1; i <= 5; i++) {
