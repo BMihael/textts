@@ -1,4 +1,4 @@
-#  Project that leverages a concurrent approach to process text.
+#  Project that leverages a concurrent approach to text processing.
 
 
 Given text:
