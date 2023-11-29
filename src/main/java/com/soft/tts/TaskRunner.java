@@ -36,7 +36,7 @@ public class TaskRunner {
     }
   }
 
-  public static void startTasks(ExecutorService executorService, List<Integer> load)
+  private static void startTasks(ExecutorService executorService, List<Integer> load)
       throws ExecutionException, InterruptedException {
     long milisStart = System.currentTimeMillis();
 
