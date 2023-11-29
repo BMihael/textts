@@ -27,7 +27,7 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
   public abstract T performAction(String word);
 
   public List<CompletableFuture<T>> applyAction(
-      List<SentenceHolder> tokens, ExecutorService service, int timeInSecondToSimulateLoad) {
+      List<SentenceHolder> tokens, ExecutorService service, Integer load) {
     List<CompletableFuture<T>> list = new ArrayList<>();
     for (SentenceHolder token : tokens) {
 
@@ -38,7 +38,7 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
             CompletableFuture.supplyAsync(
                 () -> {
                   try {
-                    Thread.sleep(timeInSecondToSimulateLoad);
+                    Thread.sleep(load);
                   } catch (InterruptedException e) {
                     e.printStackTrace();
                   }
@@ -55,6 +55,7 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
     }
     return list;
   }
+
   protected String extractResult(CompletableFuture<List<String>> future) {
     List<String> list;
     String resultString = null;

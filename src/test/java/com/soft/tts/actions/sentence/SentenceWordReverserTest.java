@@ -24,7 +24,7 @@ public class SentenceWordReverserTest extends TestCase {
   public void setUp() throws Exception {
     super.setUp();
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_for_reversal);
-    sentenceWordReverser = new SentenceWordReverser(tokens);
+    sentenceWordReverser = new SentenceWordReverser(tokens, 0);
   }
 
   @Test

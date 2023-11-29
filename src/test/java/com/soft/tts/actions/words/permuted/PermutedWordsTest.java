@@ -18,7 +18,7 @@ public class PermutedWordsTest extends TestCase {
   @Test
   public void testGet() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
-    permutedWords = new PermutedWords(tokens);
+    permutedWords = new PermutedWords(tokens, 0);
     String result = permutedWords.get();
     assertEquals(result.substring(0, 1), "C");
     assertEquals(result.substring(6, 7), "t");
@@ -33,7 +33,7 @@ public class PermutedWordsTest extends TestCase {
   @Test
   public void testGet_with_comma() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_with_comma);
-    permutedWords = new PermutedWords(tokens);
+    permutedWords = new PermutedWords(tokens, 0);
     String result = permutedWords.get();
     assertEquals(result.substring(0, 1), "C");
     assertEquals(result.substring(6, 7), "t");

@@ -31,14 +31,14 @@ import java.util.stream.Collectors;
 public abstract class BaseActionManager<T> {
 
   protected abstract List<CompletableFuture<T>> applyAction(
-      List<SentenceHolder> tokens, ExecutorService service, int timeInSecondToSimulateLoad);
+      List<SentenceHolder> tokens, ExecutorService service, Integer load);
 
-  public CompletableFuture<List<T>> submitTasks(List<SentenceHolder> tokens, int numOfThreads) {
+  public CompletableFuture<List<T>> submitTasks(List<SentenceHolder> tokens, int numOfThreads, Integer load) {
     ExecutorService service = Executors.newFixedThreadPool(numOfThreads);
 
     CompletableFuture<List<T>> result;
     try {
-      List<CompletableFuture<T>> listSentenceFutures = applyAction(tokens, service, 0);
+      List<CompletableFuture<T>> listSentenceFutures = applyAction(tokens, service, load);
       result = allOfFutures(listSentenceFutures);
 
     } catch (Exception e) {

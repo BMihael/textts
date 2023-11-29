@@ -23,14 +23,14 @@ public class SentenceWordsLetterReverserTest extends TestCase {
   @Test
   public void testGet() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
-    sentenceWordsLetterReverser = new SentenceWordsLetterReverser(tokens);
+    sentenceWordsLetterReverser = new SentenceWordsLetterReverser(tokens, 0);
     assertEquals(textWordsReversed, sentenceWordsLetterReverser.get());
   }
 
   @Test
   public void testGet_with_comma() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_with_comma);
-    sentenceWordsLetterReverser = new SentenceWordsLetterReverser(tokens);
+    sentenceWordsLetterReverser = new SentenceWordsLetterReverser(tokens, 0);
     assertEquals(textWordsReversed_with_comma, sentenceWordsLetterReverser.get());
   }
 }

@@ -11,14 +11,16 @@ public class SentenceReverser extends SentenceManager<String> implements Supplie
   private static final String ACTION_IDENTIFIER = "sentenceReverser";
 
   private final List<SentenceHolder> tokens;
+  private final Integer load;
 
-  public SentenceReverser(List<SentenceHolder> tokens) {
+  public SentenceReverser(List<SentenceHolder> tokens, Integer load) {
     this.tokens = tokens;
+    this.load = load;
   }
 
   @Override
   public String get() {
-    return extractResultReversed(submitTasks(tokens, 1));
+    return extractResultReversed(submitTasks(tokens, tokens.size(), load));
   }
 
   @Override

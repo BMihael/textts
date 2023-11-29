@@ -22,7 +22,7 @@ public class VowelCounterTest extends TestCase {
   @Test
   public void test1() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
-    vowelCounter = new VowelCounter(tokens);
+    vowelCounter = new VowelCounter(tokens, 0);
     List<VowelOccurrence> lista = vowelCounter.get();
     assertNotNull(lista);
   }
@@ -30,7 +30,7 @@ public class VowelCounterTest extends TestCase {
   @Test
   public void test2() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
-    vowelCounter = new VowelCounter(tokens);
+    vowelCounter = new VowelCounter(tokens, 0);
     List<VowelOccurrence> lista = vowelCounter.get();
     assertEquals("Coolest ship ever.", lista.get(0).getSentence());
 
@@ -45,7 +45,7 @@ public class VowelCounterTest extends TestCase {
   @Test
   public void test3() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_with_comma);
-    vowelCounter = new VowelCounter(tokens);
+    vowelCounter = new VowelCounter(tokens, 0);
     assertNotNull(vowelCounter.get());
   }
 }
