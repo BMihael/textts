@@ -37,12 +37,12 @@ public abstract class WordManager<T> extends BaseActionManager<T> {
         CompletableFuture<T> task =
             CompletableFuture.supplyAsync(
                 () -> {
+                  logAction(Thread.currentThread().toString());
                   try {
                     Thread.sleep(load);
                   } catch (InterruptedException e) {
                     e.printStackTrace();
                   }
-                  logAction(Thread.currentThread().toString());
                   return performAction(word);
                 },
                 service);

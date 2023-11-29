@@ -34,12 +34,12 @@ public abstract class SentenceManager<T> extends BaseActionManager<T> {
       CompletableFuture<T> task =
           CompletableFuture.supplyAsync(
               () -> {
+                logAction(Thread.currentThread().toString());
                 try {
                   Thread.sleep(load);
                 } catch (InterruptedException e) {
                   e.printStackTrace();
                 }
-                logAction(Thread.currentThread().toString());
                 return performAction(token);
               },
               service);
