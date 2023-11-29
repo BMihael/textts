@@ -1,4 +1,4 @@
-package com.soft.tts.util;
+package com.soft.tts.model;
 
 import static com.soft.tts.model.Messages.SEPARATOR_CANNOT_BE_NULL;
 
@@ -7,7 +7,7 @@ public class SeparatorInfo {
   private final String separator;
   private final int index;
 
-  SeparatorInfo(String separator, int index) {
+  public SeparatorInfo(String separator, int index) {
     if (separator == null) {
       throw new IllegalArgumentException(SEPARATOR_CANNOT_BE_NULL);
     }

@@ -3,6 +3,7 @@ package com.soft.tts.util;
 import com.soft.tts.exception.NoTextDetected;
 import com.soft.tts.exception.SentenceUtilsException;
 import com.soft.tts.model.SentenceHolder;
+import com.soft.tts.model.SeparatorInfo;
 
 import java.util.*;
 
