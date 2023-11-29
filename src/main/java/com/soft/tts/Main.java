@@ -38,7 +38,7 @@ public class Main {
     long milisStart = System.currentTimeMillis();
 
     TextProvider textProvider = new TextMock();
-    String text = textProvider.provideText2();
+    String text = textProvider.provideText1();
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
 
     CompletableFuture<String> task1 =
