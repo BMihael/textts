@@ -30,6 +30,7 @@ import java.util.stream.Collectors;
  */
 public abstract class BaseActionManager<T> {
 
+  public static final String COMMA = ",";
   public static final String DEFAULT_DELIMITER = " ";
 
   protected abstract List<CompletableFuture<T>> applyAction(
@@ -58,6 +59,10 @@ public abstract class BaseActionManager<T> {
         CompletableFuture.allOf(futuresList.toArray(new CompletableFuture[0]));
     return allFuturesResult.thenApply(
         v -> futuresList.stream().map(CompletableFuture::join).collect(Collectors.<T>toList()));
+  }
+
+  protected String capitaliseFirstWord(String word) {
+    return Character.toUpperCase(word.charAt(0)) + word.substring(1);
   }
 
   protected abstract void logException(String action);
