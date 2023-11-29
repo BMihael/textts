@@ -18,9 +18,28 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class Main {
-  public static void main(String[] args) throws ExecutionException, InterruptedException {
+
+  public static void main(String[] args) {
+    ExecutorService executorService = Executors.newFixedThreadPool(getNumberOfThreads(args));
+    try {
+      startTasks(executorService);
+    } catch (ExecutionException | InterruptedException e) {
+      e.printStackTrace();
+    } finally {
+      executorService.shutdown();
+    }
+  }
+
+  private static int getNumberOfThreads(String[] args) {
+    if (args.length == 0) {
+      return 5;
+    }
+    return Integer.parseInt(args[0]);
+  }
+
+  public static void startTasks(ExecutorService executorService)
+      throws ExecutionException, InterruptedException {
     long milisStart = System.currentTimeMillis();
-    ExecutorService executorService = Executors.newFixedThreadPool(4);
 
     TextProvider textProvider = new TextMock();
     String text = textProvider.provideText2();
@@ -66,6 +85,5 @@ public class Main {
 
     long milisEnd = System.currentTimeMillis();
     System.out.println("Time: " + (milisEnd - milisStart));
-    executorService.shutdown();
   }
 }
