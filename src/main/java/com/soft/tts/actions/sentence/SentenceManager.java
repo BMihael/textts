@@ -1,5 +1,6 @@
-package com.soft.tts.actions;
+package com.soft.tts.actions.sentence;
 
+import com.soft.tts.actions.BaseActionManager;
 import com.soft.tts.actions.sentence.reverse.SentenceReverser;
 import com.soft.tts.model.SentenceHolder;
 
@@ -8,10 +9,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 /**
  * An abstract class designed for managing and processing sentences. It provides a framework for
@@ -21,7 +20,7 @@ import java.util.stream.Collectors;
  *
  * @param <T> The type of result produced by the sentence processing action.
  */
-public abstract class SentenceManager<T> {
+public abstract class SentenceManager<T> extends BaseActionManager<T> {
 
   protected static final String DEFAULT_DELIMITER = " ";
   private static final Logger logger = Logger.getLogger(SentenceReverser.class.getName());
@@ -49,28 +48,18 @@ public abstract class SentenceManager<T> {
     return list;
   }
 
-  public CompletableFuture<List<T>> submitTasks(List<SentenceHolder> tokens, int numOfThreads) {
-    ExecutorService service = Executors.newFixedThreadPool(numOfThreads);
-
-    CompletableFuture<List<T>> result;
+  protected String extractResultReversed(CompletableFuture<List<String>> future) {
+    List<String> list;
+    String resultString = null;
     try {
-      List<CompletableFuture<T>> listSentenceFutures = applyAction(tokens, service, 0);
-      result = allOfFutures(listSentenceFutures);
-
-    } catch (Exception e) {
-      logException(e.getMessage());
-      throw new RuntimeException(e);
-    } finally {
-      service.shutdown();
+      list = future.get();
+      resultString =
+          list.stream().reduce((partial, next) -> next + DEFAULT_DELIMITER + partial).orElse("");
+    } catch (InterruptedException | ExecutionException e) {
+      e.printStackTrace();
     }
-    return result;
-  }
 
-  public <T> CompletableFuture<List<T>> allOfFutures(List<CompletableFuture<T>> futuresList) {
-    CompletableFuture<Void> allFuturesResult =
-        CompletableFuture.allOf(futuresList.toArray(new CompletableFuture[0]));
-    return allFuturesResult.thenApply(
-        v -> futuresList.stream().map(CompletableFuture::join).collect(Collectors.<T>toList()));
+    return resultString;
   }
 
   protected String extractResult(CompletableFuture<List<String>> future) {
@@ -78,8 +67,8 @@ public abstract class SentenceManager<T> {
     String resultString = null;
     try {
       list = future.get();
-      resultString =
-          list.stream().reduce((partial, next) -> next + DEFAULT_DELIMITER + partial).orElse("");
+      resultString = // prebaciti ovo u binary operator
+          list.stream().reduce((partial, next) -> partial + DEFAULT_DELIMITER + next).orElse("");
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
@@ -95,6 +84,7 @@ public abstract class SentenceManager<T> {
     logger.log(Level.INFO, action);
   }
 
+  @Override
   public void logException(String action) {
     logger.log(Level.SEVERE, action);
   }

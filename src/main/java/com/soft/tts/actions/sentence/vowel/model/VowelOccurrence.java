@@ -1,4 +1,4 @@
-package com.soft.tts.actions.statistic.vowel.counter.model;
+package com.soft.tts.actions.sentence.vowel.model;
 
 import java.util.Map;
 

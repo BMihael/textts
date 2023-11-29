@@ -16,6 +16,7 @@ public class SentenceUtilTest extends TestCase {
   private static final String text4 = "Sentence 1. Sentence 2.";
   private static final String text5 = "Sentence 1? Sentence 2.";
   private static final String text5_without_dot_at_end = "Sentence 1? Sentence 2";
+  private static final String text6_sentence_with_comma = "Sentence 1, Sentence 2";
 
   @Test
   public void test1() {
@@ -81,5 +82,19 @@ public class SentenceUtilTest extends TestCase {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text5_without_dot_at_end);
     Assertions.assertEquals(tokens.get(1).getSeparator(), ".");
     Assertions.assertEquals(tokens.get(1).getSentence(), "Sentence 2");
+  }
+
+  @Test
+  public void testIsSeparator() {
+    assertTrue(SentenceUtil.isSeparator("."));
+    assertTrue(SentenceUtil.isSeparator("?"));
+    assertTrue(SentenceUtil.isSeparator("!"));
+    assertFalse(SentenceUtil.isSeparator("m"));
+  }
+
+  @Test
+  public void test_text6() {
+    List<SentenceHolder> tokens = SentenceUtil.generateTokens(text6_sentence_with_comma);
+    assertEquals(1, tokens.size());
   }
 }

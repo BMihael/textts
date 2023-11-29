@@ -15,8 +15,8 @@ public class SentenceWordReverserTest extends TestCase {
   private static final String sentence1_sentence = "Sentence 1";
   private static final String sentence1_result = "1 Sentence?";
 
-  private static final String text_for_reversal = "Elephant is large.";
-  private static final String text_reversed = "Large is Elephant.";
+  private static final String text_for_reversal = "Elephant is large. Ship is cool";
+  private static final String text_reversed = "Large is Elephant. Cool is Ship.";
 
   SentenceWordReverser sentenceWordReverser;
 

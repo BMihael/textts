@@ -9,7 +9,7 @@ public class TextMock implements TextProvider {
 
   @Override
   public String provideText2() {
-    return "Coolest ship ever. Is sun biggest? Elephant is large";
+    return "Coolest ship ever woww, Is sun biggest? Elephant is large";
   }
 
   @Override

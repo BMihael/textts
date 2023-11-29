@@ -67,4 +67,8 @@ public class SentenceUtil {
         ? Optional.of(new SeparatorInfo(tempSeparator, minIndex))
         : Optional.empty();
   }
+
+  public static boolean isSeparator(String word) {
+    return separators.contains(word);
+  }
 }

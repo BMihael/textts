@@ -2,8 +2,8 @@ package com.soft.tts;
 
 import com.soft.tts.actions.sentence.reverse.SentenceReverser;
 import com.soft.tts.actions.sentence.reverseorderofwords.SentenceWordReverser;
-import com.soft.tts.actions.statistic.vowel.counter.VowelCounter;
-import com.soft.tts.actions.statistic.vowel.counter.model.VowelOccurrence;
+import com.soft.tts.actions.sentence.vowel.counter.VowelCounter;
+import com.soft.tts.actions.sentence.vowel.model.VowelOccurrence;
 import com.soft.tts.actions.words.permuted.PermutedWords;
 import com.soft.tts.actions.words.reverse.SentenceWordsLetterReverser;
 import com.soft.tts.model.SentenceHolder;

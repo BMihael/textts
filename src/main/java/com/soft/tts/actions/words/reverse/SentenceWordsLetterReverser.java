@@ -1,13 +1,11 @@
 package com.soft.tts.actions.words.reverse;
 
-import com.soft.tts.actions.SentenceManager;
+import com.soft.tts.actions.sentence.SentenceManager;
+import com.soft.tts.actions.words.WordManager;
 import com.soft.tts.model.SentenceHolder;
 
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 /** Class processes sentences by reversing the letters of each word. */
@@ -23,26 +21,12 @@ public class SentenceWordsLetterReverser extends SentenceManager<String>
 
   @Override
   public String get() {
-    ExecutorService service = Executors.newFixedThreadPool(1);
-
-    CompletableFuture<List<String>> result;
-    try {
-      List<CompletableFuture<String>> listSentenceFutures = applyAction(tokens, service, 0);
-      result = allOfFutures(listSentenceFutures);
-    } catch (Exception e) {
-      logException(e.getMessage());
-      throw new RuntimeException(e);
-    } finally {
-      service.shutdown();
-    }
-
-    return extractResult(result);
+    return extractResult(submitTasks(tokens, 1));
   }
 
   @Override
   public String performAction(SentenceHolder sentence) {
     logAction(ACTION_IDENTIFIER);
-    logAction(Thread.currentThread().toString());
     return this.processSentence(sentence);
   }
 
@@ -63,6 +47,12 @@ public class SentenceWordsLetterReverser extends SentenceManager<String>
   }
 
   private String reverseWord(String word) {
+    if (WordManager.containsComma(word)) {
+      return new StringBuilder(word.substring(0, word.length() - 1))
+          .reverse()
+          .append(",")
+          .toString();
+    }
     return new StringBuilder(word).reverse().toString();
   }
 }
