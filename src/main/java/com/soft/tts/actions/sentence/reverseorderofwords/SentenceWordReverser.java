@@ -1,6 +1,6 @@
 package com.soft.tts.actions.sentence.reverseorderofwords;
 
-import com.soft.tts.actions.SentenceManager;
+import com.soft.tts.actions.sentence.SentenceManager;
 import com.soft.tts.model.SentenceHolder;
 
 import java.util.List;
@@ -25,7 +25,6 @@ public class SentenceWordReverser extends SentenceManager<String> implements Sup
   @Override
   public String performAction(SentenceHolder sentence) {
     logAction(ACTION_IDENTIFIER);
-    logAction(Thread.currentThread().toString());
     return this.reverseOrderOfWords(sentence);
   }
 

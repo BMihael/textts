@@ -1,7 +1,7 @@
-package com.soft.tts.actions.statistic.vowel.counter;
+package com.soft.tts.actions.sentence.vowel.counter;
 
-import com.soft.tts.actions.SentenceManager;
-import com.soft.tts.actions.statistic.vowel.counter.model.VowelOccurrence;
+import com.soft.tts.actions.sentence.SentenceManager;
+import com.soft.tts.actions.sentence.vowel.model.VowelOccurrence;
 import com.soft.tts.model.SentenceHolder;
 
 import java.util.List;
@@ -32,7 +32,6 @@ public class VowelCounter extends SentenceManager<VowelOccurrence>
   @Override
   public VowelOccurrence performAction(SentenceHolder sentence) {
     logAction(ACTION_IDENTIFIER);
-    logAction(Thread.currentThread().toString());
     return this.countVowels(sentence);
   }
 

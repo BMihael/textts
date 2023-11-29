@@ -1,6 +1,6 @@
 package com.soft.tts.actions.sentence.reverse;
 
-import com.soft.tts.actions.SentenceManager;
+import com.soft.tts.actions.sentence.SentenceManager;
 import com.soft.tts.model.SentenceHolder;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class SentenceReverser extends SentenceManager<String> implements Supplie
 
   @Override
   public String get() {
-    return extractResult(submitTasks(tokens, 1));
+    return extractResultReversed(submitTasks(tokens, 1));
   }
 
   @Override
