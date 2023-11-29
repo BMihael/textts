@@ -22,4 +22,7 @@ public class Messages {
   /** Message indicating that string representing sentence and vowel must be present. */
   public static final String VOWEL_OCCURRENCE_FIELDS_CANNOT_BE_NULL =
       "Sentence and vowel occurrences cannot be null";
+
+  /** Message indicating that string must be number. */
+  public static final String NUMBER_IS_REQUIRED = "Please enter number";
 }

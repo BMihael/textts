@@ -6,6 +6,7 @@ import com.soft.tts.actions.sentence.vowel.counter.VowelCounter;
 import com.soft.tts.actions.sentence.vowel.model.VowelOccurrence;
 import com.soft.tts.actions.words.permuted.PermutedWords;
 import com.soft.tts.actions.words.reverse.SentenceWordsLetterReverser;
+import com.soft.tts.exception.NumberRequiredException;
 import com.soft.tts.model.SentenceHolder;
 import com.soft.tts.text.TextMock;
 import com.soft.tts.text.TextProvider;
@@ -17,6 +18,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static com.soft.tts.model.Messages.NUMBER_IS_REQUIRED;
 
 public class Main {
 
@@ -87,7 +90,12 @@ public class Main {
   }
 
   private static int getNumberOfThreads(String[] args) {
-    return args.length == 0 ? 5 : Integer.parseInt(args[0]);
+    if (args.length == 0) return 5;
+    try {
+      return Integer.parseInt(args[0]);
+    } catch (NumberFormatException exception) {
+      throw new NumberRequiredException(NUMBER_IS_REQUIRED);
+    }
   }
 
   private static List<Integer> gerSimulatedLoadInMilisecond(String[] args) {
@@ -95,8 +103,12 @@ public class Main {
 
     for (int i = 1; i <= 5; i++) {
       if (i < args.length) {
-        int value = Integer.parseInt(args[i]);
-        result.add(value);
+        try {
+          int value = Integer.parseInt(args[i]);
+          result.add(value);
+        } catch (NumberFormatException exception) {
+          throw new NumberRequiredException(NUMBER_IS_REQUIRED);
+        }
       } else {
         result.add(0);
       }
