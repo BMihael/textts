@@ -5,9 +5,6 @@ import com.soft.tts.model.SentenceHolder;
 
 import java.util.List;
 import java.util.StringJoiner;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
 /** Class reverses the order of words within a sentence. */
@@ -22,20 +19,7 @@ public class SentenceWordReverser extends SentenceManager<String> implements Sup
 
   @Override
   public String get() {
-    ExecutorService service = Executors.newFixedThreadPool(1);
-
-    CompletableFuture<List<String>> result;
-    try {
-      List<CompletableFuture<String>> listSentenceFutures = applyAction(tokens, service, 0);
-      result = allOfFutures(listSentenceFutures);
-    } catch (Exception e) {
-      logException(e.getMessage());
-      throw new RuntimeException(e);
-    } finally {
-      service.shutdown();
-    }
-
-    return extractResult(result);
+    return extractResult(submitTasks(tokens, 1));
   }
 
   @Override

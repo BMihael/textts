@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 public abstract class SentenceManager<T> {
 
   protected static final String DEFAULT_DELIMITER = " ";
-
   private static final Logger logger = Logger.getLogger(SentenceReverser.class.getName());
 
   public abstract T performAction(SentenceHolder sentence);
@@ -40,12 +40,30 @@ public abstract class SentenceManager<T> {
                 } catch (InterruptedException e) {
                   e.printStackTrace();
                 }
+                logAction(Thread.currentThread().toString());
                 return performAction(token);
               },
               service);
       list.add(task);
     }
     return list;
+  }
+
+  public CompletableFuture<List<T>> submitTasks(List<SentenceHolder> tokens, int numOfThreads) {
+    ExecutorService service = Executors.newFixedThreadPool(numOfThreads);
+
+    CompletableFuture<List<T>> result;
+    try {
+      List<CompletableFuture<T>> listSentenceFutures = applyAction(tokens, service, 0);
+      result = allOfFutures(listSentenceFutures);
+
+    } catch (Exception e) {
+      logException(e.getMessage());
+      throw new RuntimeException(e);
+    } finally {
+      service.shutdown();
+    }
+    return result;
   }
 
   public <T> CompletableFuture<List<T>> allOfFutures(List<CompletableFuture<T>> futuresList) {
@@ -61,7 +79,7 @@ public abstract class SentenceManager<T> {
     try {
       list = future.get();
       resultString =
-          list.stream().reduce((partial, next) -> partial + next + DEFAULT_DELIMITER).orElse("");
+          list.stream().reduce((partial, next) -> next + DEFAULT_DELIMITER + partial).orElse("");
     } catch (InterruptedException | ExecutionException e) {
       e.printStackTrace();
     }
