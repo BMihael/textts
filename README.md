@@ -1,4 +1,4 @@
-# textts
+#  Project that leverages a concurrent approach to process text.
 
 
 Given text:
