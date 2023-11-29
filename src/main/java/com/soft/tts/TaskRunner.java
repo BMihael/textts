@@ -40,6 +40,7 @@ public class TaskRunner {
       throws ExecutionException, InterruptedException {
     long milisStart = System.currentTimeMillis();
 
+//a
     TextProvider textProvider = new TextMock();
     String text = textProvider.provideText1();
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
