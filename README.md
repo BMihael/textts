@@ -30,8 +30,6 @@ For implementation, use classes from the Java 8 SE framework (or later).
 
 
 
-
-
 Run options:
 
 Run application with 5 threads for 5 task and 0ms of delay between tasks
