@@ -29,21 +29,21 @@ public class SentenceReverserTest extends TestCase {
   @Test
   public void testGet() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_for_reversal);
-    sentenceReverser = new SentenceReverser(tokens);
+    sentenceReverser = new SentenceReverser(tokens, 0);
     assertEquals(text_reversed, this.sentenceReverser.get());
   }
 
   @Test
   public void testGetWithComma() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text_for_reversal_with_comma);
-    sentenceReverser = new SentenceReverser(tokens);
+    sentenceReverser = new SentenceReverser(tokens,0);
     assertEquals(text_reversed_with_comma, this.sentenceReverser.get());
   }
 
   @Test
   public void testPerformAction() {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(sentence1_separator);
-    sentenceReverser = new SentenceReverser(tokens);
+    sentenceReverser = new SentenceReverser(tokens, 0);
     String result =
         this.sentenceReverser.performAction(
             new SentenceHolder(sentence1_separator, sentence1_sentence));

@@ -18,14 +18,16 @@ public class VowelCounter extends SentenceManager<VowelOccurrence>
   private static final String VOWELS = "aeiou";
 
   private final List<SentenceHolder> tokens;
+  private final Integer load;
 
-  public VowelCounter(List<SentenceHolder> tokens) {
+  public VowelCounter(List<SentenceHolder> tokens, Integer load) {
     this.tokens = tokens;
+    this.load = load;
   }
 
   @Override
   public List<VowelOccurrence> get() {
-    CompletableFuture<List<VowelOccurrence>> result = submitTasks(tokens, 1);
+    CompletableFuture<List<VowelOccurrence>> result = submitTasks(tokens, tokens.size(), load);
     return extractResultOfVowelOccurrence(result);
   }
 

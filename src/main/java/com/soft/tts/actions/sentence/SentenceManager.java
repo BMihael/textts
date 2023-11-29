@@ -28,14 +28,14 @@ public abstract class SentenceManager<T> extends BaseActionManager<T> {
   public abstract T performAction(SentenceHolder sentence);
 
   public List<CompletableFuture<T>> applyAction(
-      List<SentenceHolder> tokens, ExecutorService service, int timeInSecondToSimulateLoad) {
+      List<SentenceHolder> tokens, ExecutorService service, Integer load) {
     List<CompletableFuture<T>> list = new ArrayList<>();
     for (SentenceHolder token : tokens) {
       CompletableFuture<T> task =
           CompletableFuture.supplyAsync(
               () -> {
                 try {
-                  Thread.sleep(timeInSecondToSimulateLoad);
+                  Thread.sleep(load);
                 } catch (InterruptedException e) {
                   e.printStackTrace();
                 }
