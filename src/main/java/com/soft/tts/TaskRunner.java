@@ -45,24 +45,21 @@ public class TaskRunner {
     List<SentenceHolder> tokens = SentenceUtil.generateTokens(text);
 
     CompletableFuture<String> task1 =
-        CompletableFuture.supplyAsync(
-            () -> new PermutedWords(tokens, load.get(0)).get(), executorService);
+        CompletableFuture.supplyAsync(new PermutedWords(tokens, load.get(0)), executorService);
 
     CompletableFuture<String> task2 =
         CompletableFuture.supplyAsync(
-            () -> new SentenceWordsLetterReverser(tokens, load.get(1)).get(), executorService);
+            new SentenceWordsLetterReverser(tokens, load.get(1)), executorService);
 
     CompletableFuture<String> task3 =
         CompletableFuture.supplyAsync(
-            () -> new SentenceWordReverser(tokens, load.get(2)).get(), executorService);
+            new SentenceWordReverser(tokens, load.get(2)), executorService);
 
     CompletableFuture<String> task4 =
-        CompletableFuture.supplyAsync(
-            () -> new SentenceReverser(tokens, load.get(3)).get(), executorService);
+        CompletableFuture.supplyAsync(new SentenceReverser(tokens, load.get(3)), executorService);
 
     CompletableFuture<List<VowelOccurrence>> task5 =
-        CompletableFuture.supplyAsync(
-            () -> new VowelCounter(tokens, load.get(4)).get(), executorService);
+        CompletableFuture.supplyAsync(new VowelCounter(tokens, load.get(4)), executorService);
 
     CompletableFuture<Void> allFuture = CompletableFuture.allOf(task1, task2, task3, task4, task5);
     allFuture.join();

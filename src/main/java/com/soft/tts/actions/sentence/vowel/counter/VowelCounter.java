@@ -50,7 +50,7 @@ public class VowelCounter extends SentenceManager<VowelOccurrence>
 
   public VowelOccurrence countVowels(SentenceHolder sentences) {
     return new VowelOccurrence(
-        sentences.getSentence() + sentences.getSeparator(),
+        sentences.getSentence().concat(sentences.getSeparator()),
         countVowelOccurrences(sentences.getSentence()));
   }
 

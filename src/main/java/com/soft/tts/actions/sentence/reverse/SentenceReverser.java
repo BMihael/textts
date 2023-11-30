@@ -2,7 +2,7 @@ package com.soft.tts.actions.sentence.reverse;
 
 import com.soft.tts.actions.sentence.SentenceManager;
 import com.soft.tts.model.SentenceHolder;
-import com.soft.tts.util.combiner.sentence.ReverseSentenceCombiner;
+import com.soft.tts.util.combiner.sentence.ReversalSentenceCombiner;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -21,7 +21,7 @@ public class SentenceReverser extends SentenceManager<String> implements Supplie
 
   @Override
   public String get() {
-    return extractResult(submitTasks(tokens, tokens.size(), load), new ReverseSentenceCombiner());
+    return extractResult(submitTasks(tokens, tokens.size(), load), new ReversalSentenceCombiner());
   }
 
   @Override
@@ -31,6 +31,6 @@ public class SentenceReverser extends SentenceManager<String> implements Supplie
   }
 
   private String reverseSentence(SentenceHolder sentence) {
-    return sentence.getSentence() + sentence.getSeparator();
+    return sentence.getSentence().concat(sentence.getSeparator());
   }
 }
