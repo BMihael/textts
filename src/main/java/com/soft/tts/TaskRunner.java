@@ -22,6 +22,7 @@ import java.util.concurrent.Executors;
 import static com.soft.tts.model.Messages.NUMBER_IS_REQUIRED;
 
 public class TaskRunner {
+  private TaskRunner() {}
 
   public static void run(String[] args) {
     ExecutorService executorService = Executors.newFixedThreadPool(getNumberOfThreads(args));

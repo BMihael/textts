@@ -2,6 +2,8 @@ package com.soft.tts.model;
 
 /** Utility class for storing constant messages. */
 public class Messages {
+  private Messages() {}
+
   /** Message indicating that instantiation is not allowed for a utility class. */
   public static final String UTIL_CLASS_INSTANTIATION =
       "Instantiation not allowed for utility class.";
